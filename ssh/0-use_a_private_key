@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#connects to my intranet server.
+
+ssh -i ~/.ssh/school ubuntu@54.211.119.253
+
