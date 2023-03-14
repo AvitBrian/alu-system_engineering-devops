@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo $[chmod +x *]
+chmod +x *
 git add .
 git commit -m updates
 git push
