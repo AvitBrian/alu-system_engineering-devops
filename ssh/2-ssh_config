@@ -1,0 +1,6 @@
+Host 5439-web-01
+    HostName 54.211.119.253
+    PreferredAuthentications publickey
+    identityFile ~/.ssh/school
+    PasswordAuthentication no
+    User ubuntu
