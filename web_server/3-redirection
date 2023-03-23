@@ -1,27 +1,24 @@
 #!/usr/bin/env bash
-# script configuration to redirect to another page
-sudo apt-get update
+# bash script to install nginx web server & make the following configurations:
 
-# Install Nginx
-sudo apt-get install nginx -y
+apt-get update
+apt-get install -y nginx
 
-# Modify the Nginx configuration file to include the custom page
-sudo tee /var/www/html/index.html > /dev/null << EOF
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Welcome to Holberton School!</title>
-  </head>
-  <body>
-    <h1>Holberton School</h1>
-    <p>Welcome to Holberton School's Nginx server!</p>
-  </body>
-</html>
-EOF
+mkdir /etc/nginx/html
 
-# Modify the Nginx configuration file to listen on port 80
-sudo sed -i 's/listen \[::\]:80 default_server;/listen 80 default_server;/' /etc/nginx/sites-available/default
+touch /etc/nginx/html/index.html
 
-# Test the configuration and restart Nginx
-sudo nginx -t && sudo service nginx restart
+echo "Holberton School" > /etc/nginx/html/index.html
+printf %s "server {
+     listen      80 default_server;
+     listen      [::]:80 default_server;
+     root        /etc/nginx/html;
+     index       index.html index.htm;
+     location /redirect_me {
+        return 301 http://youtube.com/;
+    }
+}
+" > /etc/nginx/sites-available/default
 
+
+sudo service nginx restart
