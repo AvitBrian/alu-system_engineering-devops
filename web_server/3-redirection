@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-
-# Update the system packages
+# script configuration to redirect to another page
 sudo apt-get update
 
 # Install Nginx
