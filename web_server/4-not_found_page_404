@@ -1,5 +1,3 @@
-
-
 #!/usr/bin/env bash
 # bash script to install nginx web server & make the following configurations:
 
