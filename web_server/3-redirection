@@ -1,24 +1,28 @@
-#!/usr/bin/env bash
-# bash script to install nginx web server & make the following configurations:
+#!/bin/bash
 
-apt-get update
-apt-get install -y nginx
+# Update the system packages
+sudo apt-get update
 
-mkdir /etc/nginx/html
+# Install Nginx
+sudo apt-get install nginx -y
 
-touch /etc/nginx/html/index.html
+# Modify the Nginx configuration file to include the custom page
+sudo tee /var/www/html/index.html > /dev/null << EOF
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to Holberton School!</title>
+  </head>
+  <body>
+    <h1>Holberton School</h1>
+    <p>Welcome to Holberton School's Nginx server!</p>
+  </body>
+</html>
+EOF
 
-echo "Holberton School" > /etc/nginx/html/index.html
-printf %s "server {
-     listen      80 default_server;
-     listen      [::]:80 default_server;
-     root        /etc/nginx/html;
-     index       index.html index.htm;
-     location /redirect_me {
-        return 301 http://google.com/;
-    }
-}
-" > /etc/nginx/sites-available/default
+# Modify the Nginx configuration file to listen on port 80
+sudo sed -i 's/listen \[::\]:80 default_server;/listen 80 default_server;/' /etc/nginx/sites-available/default
 
+# Test the configuration and restart Nginx
+sudo nginx -t && sudo service nginx restart
 
-sudo service nginx restart
