@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Install Nginx (if not already installed) and start the service
+sudo apt-get update
+sudo apt-get install nginx -y
+sudo systemctl start nginx
+
+# Modify the Nginx configuration file to include the custom header
+sudo sed -i 's/# server_tokens off;/# server_tokens off;\n        add_header X-Served-By $hostname;/' /etc/nginx/nginx.conf
+
+# Restart the Nginx service to apply the changes
+sudo systemctl restart nginx
